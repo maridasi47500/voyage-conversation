@@ -130,6 +130,39 @@ class Route():
         print(tout,"tout")
         self.render_figure.set_param("tout",tout)
         return self.render_some_json("welcome/hey.json")
+    def save_user(self,params={}):
+        myparam=self.get_post_data()(params=("description","job_id","lat","lon","country_id","phone","email","gender","mypic","password","password_security","nomcomplet"))
+        self.user=self.dbUsers.create(myparam)
+        if self.user["user_id"]:
+            self.set_session(self.user)
+            self.set_json("{\"redirect\":\"/\"}")
+            return self.render_figure.render_json()
+        else:
+            self.set_session(self.user)
+            self.set_json("{\"redirect\":\"/sign_up\"}")
+            return self.render_figure.render_json()
+          
+    def logout(self,search):
+        self.Program.logout()
+        self.set_redirect("/")
+        return self.render_figure.render_redirect()
+    def login(self,s):
+        search=self.get_post_data()(params=("email","password"))
+        self.user=self.dbUsers.getbyemailpwsecurity(search["email"],search["password"])
+        print("user trouve", self.user)
+        if self.user["email"] != "":
+            print("redirect carte didentite")
+            self.set_session(self.user)
+            self.set_json("{\"redirect\":\"/\"}")
+        else:
+            self.set_json("{\"redirect\":\"/sign_in\"}")
+            print("session login",self.Program.get_session())
+        return self.render_figure.render_json()
+
+    def signup(self,search):
+        return self.render_figure.render_figure("user/signup.html")
+    def signin(self,search):
+        return self.render_figure.render_figure("user/signin.html")
     def run(self,redirect=False,redirect_path=False,path=False,session=False,params={},url=False,post_data=False):
         if params:
             print("mes only params : ", params)
