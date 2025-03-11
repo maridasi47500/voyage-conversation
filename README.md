@@ -1,6 +1,7 @@
 # bienvenue 
-- la librarie python :
-- pip install -m requirements 
-- vous pouvez faire sh ./mysite.sh 
-
-# job-search
+- mot
+- phrase
+- heure ville, capitale pays
+- 12 language
+- prononciation
+- pour voyager
