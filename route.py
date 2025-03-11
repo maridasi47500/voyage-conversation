@@ -113,6 +113,10 @@ class Route():
         self.render_figure.set_param("jobs",ok["rows"])
         self.render_figure.set_param("message",ok["message"])
         return self.render_figure.render_figure("welcome/searchjob.html")
+    def mot(self,params={}):
+        getparams=("id",)
+        myparam=self.get_this_route_param(getparams,params)
+        return self.render_figure.render_figure("welcome/inputmot.html")
     def voirjob(self,params={}):
         getparams=("id",)
         myparam=self.get_this_route_param(getparams,params)
@@ -161,6 +165,7 @@ class Route():
             ROUTES={
 
 
+                    '^/mot$': self.mot,
                     '^/lancerscript$': self.lancerscript,
                     '^/chercherjob$': self.searchjob,
                     '^/newjob$': self.newjob,
